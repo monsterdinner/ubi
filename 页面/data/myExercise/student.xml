@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<studentlist>
+<student>
+<name>大娃</name>
+<age>7</age>
+<gender>男</gender>
+</student>
+<student>
+<name>二娃</name>
+<age>6</age>
+<gender>男</gender>
+</student>
+<student>
+<name>三娃</name>
+<age>5</age>
+<gender>女</gender>
+</student>
+</studentlist>

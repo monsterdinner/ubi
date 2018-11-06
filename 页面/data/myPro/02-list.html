@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <style></style>
+ </head>
+ <body onload="getlist()">
+ <table  border="1px" cellspacing="1px">
+    <tr>
+    	<thead>
+		<th>登录名称</th>
+    	<th>电子邮箱</th>
+    	<th>联系方式</th>
+    	<th>用户名称</th>
+    	<th>用户性别</th>
+    	<th>操作</th>
+    	
+        </thead>
+		<tbody id="myBody"> </tbody>
+ </table >
+ <script src="common.js"></script>
+ <script>
+ function sex(a){
+   if(a==0){
+     return "女";
+   }else if(a==1){
+     return "男";
+   }else{
+	   return "不详";
+   }
+ }
+ 
+   function deleteUser(uid){
+     var xhr=createXhr();
+	 xhr.onreadystatechange=function(){
+	   if(xhr.readyState==4&&xhr.status==200){
+	     var res=xhr.responseText;
+		 if(res=="1"){
+		  alert("删除成功");
+		  getlist();
+		 }else{
+		   alert("删除失败");
+		 }
+	   }
+	 }
+	 
+	 xhr.open("get","/myPro/delete?uid="+uid,true);
+	  xhr.send(null);
+   }
+  
+   function getlist(){
+     var xhr=createXhr();
+	 xhr.onreadystatechange=function(){
+	   if(xhr.readyState==4&&xhr.status==200){
+	     var res=xhr.responseText;
+		 var users=JSON.parse(res);
+		 var html="";
+		 for(i=0;i<users.length;i++){
+		    var user=users[i];
+			html+="<tr>";
+			html+="<td>"+user.uname+"</td>";
+			html+="<td>"+user.email+"</td>";
+			html+="<td>"+user.phone+"</td>";
+			html+="<td>"+user.user_name+"</td>";
+			
+			html+="<td>"+sex(user.gender)+"</td>";
+			html+="<td><a href='javascript:deleteUser("+user.uid+")'>删除</a>";
+			html+="<a href='03-update.html?uid="+user.uid+"'>修改</a></td>";
+			html+="</tr>";
+		
+		 }
+		 $("myBody").innerHTML=html;
+	   }
+	 }
+	 xhr.open("get","/myPro/list",true);
+	 xhr.send(null);
+   }
+   
+ </script>
+
+ 
+ </body>
+</html>
+<!-- 	$("myBody").innerHTML+="<tr>""<td>"+arr[i].uname+"</td>"+
+					                           "<td>"+arr[i].email+"</td>"+
+			                       "<td>"+arr[i].phone+"</td>"+
+					                           "<td>"+arr[i].username+"</td>"+
+				  "<td>"</a>+"</td></tr>"; -->

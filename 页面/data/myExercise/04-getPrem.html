@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <style></style>
+ </head>
+ <body>
+     <p>
+	   用户名称：<input type="text" id="uname">
+	 </p>
+	 <p>
+	   用户密码：<input type="password" id="upwd">
+	 </p>
+     <input type="button" value="登录" onclick="sendMsg()">
+
+	 <script src="common.js"></script>
+	 <script>
+	   function sendMsg(){
+	      //1.创建异步对象
+		  var xhr=createXhr();
+		  //2.监听事件
+		  xhr.onreadystatechange=function(){
+		   if(xhr.readyState==4&&xhr.status==200){
+		     var res=xhr.responseText;
+			 //console.log(res);
+			 alert(res);
+		   }
+		  }
+		  //3.打开连接
+		  var uname=$("uname").value;
+		  var upwd=$("upwd").value;
+		  //console.log("用户名称："+uname);
+		  //console.log("用户密码："+upwd);
+
+		  xhr.open("get","/demo/login?uname="+uname+"&upwd="+upwd,true);
+		  //4.发送请求
+		  xhr.send(null);
+	   }
+	 </script>
+ </body>
+</html>

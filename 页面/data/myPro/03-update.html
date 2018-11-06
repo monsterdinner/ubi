@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <style></style>
+ </head>
+ <body onload="getInfo()">
+    <h1>修改页面</h1>
+	<form action="/myPro/update" method="post">
+	 
+	  <p>用户名称：<input type="text" name="uname" id="uname"></p>
+	  <p>用户密码：<input type="password"name="upwd" id="upwd"></p>
+	  <p>电子邮箱：<input type="text" name="email" id="email"></p>
+	  <p>联系方式：<input type="text" name="phone" id="phone"></p>
+	  <p>真实姓名：<input type="text" name="user_name" id="user_name"></p>
+	  <p>用户性别：<input type="radio" name="gender" id="man" value="1"><label for="man">男</label>
+	               <input type="radio" name="gender" id="woman" value="0"><label for="woman">女</label></p>
+	   <p><input type="hidden" id="uid" name="uid"></p>
+	  <p ><input type="submit" value="修改"></p>
+	      
+	</form>
+	<script src="common.js"></script>
+	<script>
+	  function getInfo(){
+	    var urlParams=new URLSearchParams(location.search);
+		var uid=urlParams.get('uid');
+		var xhr=createXhr();
+		xhr.onreadystatechange=function(){
+		  if(xhr.readyState==4&&xhr.status==200){
+		    var res=xhr.responseText;
+			var user=JSON.parse(res);
+			$("uid").value=user.uid;
+			$("uname").value=user.uname;
+			$("upwd").value=user.upwd;
+			$("email").value=user.email;
+			$("phone").value=user.phone;
+			$("user_name").value=user.user_name;
+			if(user.gender=="1"){
+			  $("man").checked=true;
+			}else{
+			  $("woman").checked=true;
+			}
+
+		  }
+		}
+	    xhr.open("get","/myPro/query?uid="+uid,true);
+     
+		xhr.send(null);
+	  }
+
+	</script>
+
+ </body>
+</html>

@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+
+   <style type="text/css">
+    
+   </style>
+  <title>Document</title>
+ </head>
+ <body>
+  
+    <p>用户账号：<input type="text" id="uname"></p>
+	<p>用户密码：<input type="password" id="upwd"></p>
+	<input type="button" value="登录" onclick="getLogin()">
+  <script src="common.js"></script>
+  <script>
+    function getLogin(){
+	  var xhr=createXhr();
+	  xhr.onreadystatechange=function(){
+	    if(xhr.readyState==4&&xhr.status==200){
+		  var res=xhr.responseText;
+		  alert(res);
+
+		}
+	  }
+	   
+	  xhr.open("post","/myPro/login",true);
+	  xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+	  var uname=$("uname").value;
+	  var upwd=$("upwd").value;
+	  var url="uname="+uname+"&upwd="+upwd;
+	  xhr.send(url);
+	}
+
+  </script>
+
+ </body>
+</html>

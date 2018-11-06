@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="css/bootstrap.css"/>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <style>
+        .logo{
+            background:url(img/uplay-logo-black.png) no-repeat;
+            height: 100%;
+            width: 125px;
+            height: 55px;
+            text-indent: -9999px;
+            margin: 30px auto;
+
+        }
+        body {
+            font-family: "Open Sans";
+            font-size: 13px;
+            line-height: 1.42857143;
+            color: #616161;
+            background-color: #fff;
+        }
+        h2{
+            font-weight: lighter;
+            margin-bottom: 30px;
+            color: #232323;
+            font-size: 27px;
+            margin-top: 18px;
+        }
+        .form-control {
+            display: block;
+            width: 100%;
+            height: 32px;
+            padding: 6px 12px;
+            font-size: 13px;
+            line-height: 1.42857143;
+            color: #555;
+            background-color: #fff;
+            background-image: none;
+            border: 1px solid #ccc;
+            border-radius: 0;
+            -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+            box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+            -webkit-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+            transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+        }
+        .form-control:focus {
+            border-color: #09c;
+            outline: 0;
+            -webkit-box-shadow: none;
+            box-shadow: none;
+        }
+        .pull-right{
+
+        }
+        #fb-connect{
+            background: url(img/fb-connect.png) no-repeat center center;
+            background-size: contain;
+            text-indent: -9999px;
+        }
+        #psn-connect{
+            background: url(img/psn-connect.png) no-repeat center center;
+            background-size:contain;
+            text-indent:-9999px;
+        }
+        #live-connect{
+            background: url(img/live-connect.png) no-repeat center center;
+            background-size:contain;
+            text-indent:-9999px;
+        }
+        #twitch-connect{
+            background: url(img/twitch-connect.png) no-repeat center center;
+            background-size:contain;
+            text-indent:-9999px;
+        }
+        .btn-default:hover, .btn-default:focus, .btn-default:active, .btn-default.active, .open .dropdown-toggle.btn-default {
+            color: #616161 !important;
+            background-color:#ebebeb !important;
+            border-color:#adadad !important;
+        }
+        div.external-login a{
+            width: 100%;
+            margin-top: 15px;
+        }
+        .external-login .btn {
+            display: inline-block;
+            margin-bottom: 0;
+            font-weight: bold;
+            text-align: center;
+            vertical-align: middle;
+            cursor: pointer;
+            background-image: none;
+            border: 1px solid #ccc;
+            white-space: nowrap;
+            padding: 6px 12px;
+            font-size: 13px;
+            line-height: 1.42857143;
+            border-radius: 0;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        .btn:focus, .btn.focus {
+            outline: 0;
+            box-shadow: 0 0 0 0 rgba(0, 123, 255, 0.25);
+        }
+        #register,#build{
+            color: #fff;
+            background-color: #7396ce;
+            border-color: #6088c7;
+            border-radius: 0;
+        }
+        .btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open .dropdown-toggle.btn-primary {
+            color: #fff !important;
+            background-color: #557fc3 !important;
+            border-color: #3d68ae !important;
+        }
+        .btn, a.uppercase {
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+        .btn-link {
+            color: #004b98;
+            font-weight: normal;
+            cursor: pointer;
+            border-radius: 0;
+        }
+        @media (min-width: 1200px) {
+            .col-xl-4 {
+                width: 50%;
+            }
+
+            .btn.btn-link, a.uppercase {
+                font-size: 12px;
+            }
+        }
+        .radio input[type="radio"], .radio-inline input[type="radio"], .checkbox input[type="checkbox"], .checkbox-inline input[type="checkbox"] {
+            float: left;
+
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+<div class="logo"></div>
+<div class="row">
+    <div class="col-md-3 col-xl-4 col-sm-2"></div>
+
+    <div class="col-md-6 col-xl-4 col-sm-8">
+        <h2>登入 Ubisoft</h2>
+
+        <form id="login-form" role="form">
+        <div class="form-group">
+            <label>邮箱：</label>
+    <input type="text" class="form-control"  id="uname" onblur="checkUname()" maxlength="12"/></div>
+            <div class="form-group">
+                <label>密码：</label>
+    <div><input type="password" class="form-control" id="upwd" onfocus="upwd_focus()" onblur="upwd_blur()" maxlength="18"/></div></div>
+                <div class="form-group d-flex justify-content-between">
+                    <button type="submit" id="register" class="btn btn-primary" onclick="getLogin()">登入</button>
+                    <a href="#" class="btn btn-link pull-right uppercase">忘记密码？</a>
+                </div>
+    <div class="checkbox" style="margin-top: 10px; margin-bottom: 10px;min-height: 18px;">
+
+        <label style="margin-bottom: 5px;"> <input type="checkbox" checked="checked" style="margin-top: 4px;"/>  &nbsp;记住密码</label>
+    </div>
+        </form>
+    <div class="text-center"><a href="#" class="btn btn-primary w-100" id="build">创建一个UBISOFT账号</a></div>
+    <div class="external-login row">
+       <div class="col-xl-3 col-md-3 col-sm-3">
+           <a href="#" class="btn btn-default" id="fb-connect">Facebook</a>
+       </div>
+        <div class="col-xl-3 col-md-3 col-sm-3">
+            <a href="#" class="btn btn-default" id="psn-connect">psn</a>
+        </div>
+        <div class="col-xl-3 col-md-3 col-sm-3">
+            <a href="#"class="btn btn-default" id="live-connect">xbox</a>
+        </div>
+        <div class="col-xl-3 col-md-3 col-sm-3"><a href="#" class="btn btn-default" id="twitch-connect">twitch</a>
+        </div>
+    </div>
+    </div>
+    <div class="col-md-3 col-xl-4 col-sm-2"></div>
+</div>
+</div>
+<script src="common.js"></script>
+<script>
+    var boolUname=true;
+    function btn_focus(){
+        $("showUname").innerHTML="需要邮箱地址。"
+    }
+    function checkUname(){
+        var uname=$("uname").value;
+            var xhr=createXhr();
+            xhr.onreadystatechange=function(){
+                if(xhr.readyState==4&&xhr.status==200){
+                    var res=xhr.responseText;
+                    if(res=="0"){
+                        $("showUname").innerHTML="";
+                        boolUname=false;
+                    }else{
+                        $("showUname").innerHTML="邮箱地址无效。";
+                        boolUname=true;
+                    }
+                }
+
+            xhr.open("get","/myPro/checkUname?uname="+uname,true);
+            xhr.send(null);
+        }
+    }
+    function upwd_blur(){
+        var upwd=$("upwd").value;
+        var cpwd=$("cpwd").value;
+        if(upwd==""){
+            $("showUpwd").innerHTML="需要密码";
+        }else {
+            $("showUpwd").innerHTML="";
+            boolUpwd=true;
+        }
+    }
+</script>
+</body>
+</html>
