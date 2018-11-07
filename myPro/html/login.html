@@ -156,13 +156,17 @@
 
         <form id="login-form" role="form">
         <div class="form-group">
-            <label>邮箱：</label>
-    <input type="text" class="form-control"  id="uname" onblur="checkUname()" maxlength="12"/></div>
+            <label>用户名：</label>
+    <input type="text" class="form-control" id="uname" name="uname" placeholder="请输入用户名" onblur="justifyUname()" maxlength="12"/>
+    <p id="pass-uname" hidden>不通过</p>
+</div>
             <div class="form-group">
                 <label>密码：</label>
-    <div><input type="password" class="form-control" id="upwd" onfocus="upwd_focus()" onblur="upwd_blur()" maxlength="18"/></div></div>
+    <input type="password" class="form-control" id="upwd" name="upwd" placeholder="请输入密码" onblur="justifyUpwd()" maxlength="18"/>
+        <p id="pass-upwd" hidden>不通过</p>
+    </div>
                 <div class="form-group d-flex justify-content-between">
-                    <button type="submit" id="register" class="btn btn-primary" onclick="getLogin()">登入</button>
+                    <button id="register" class="btn btn-primary">登入</button>
                     <a href="#" class="btn btn-link pull-right uppercase">忘记密码？</a>
                 </div>
     <div class="checkbox" style="margin-top: 10px; margin-bottom: 10px;min-height: 18px;">
@@ -188,41 +192,63 @@
     <div class="col-md-3 col-xl-4 col-sm-2"></div>
 </div>
 </div>
-<script src="common.js"></script>
+<script src="js/jquery-3.2.1.js"></script>
 <script>
-    var boolUname=true;
-    function btn_focus(){
-        $("showUname").innerHTML="需要邮箱地址。"
-    }
-    function checkUname(){
-        var uname=$("uname").value;
-            var xhr=createXhr();
-            xhr.onreadystatechange=function(){
-                if(xhr.readyState==4&&xhr.status==200){
-                    var res=xhr.responseText;
-                    if(res=="0"){
-                        $("showUname").innerHTML="";
-                        boolUname=false;
-                    }else{
-                        $("showUname").innerHTML="邮箱地址无效。";
-                        boolUname=true;
-                    }
-                }
+        var uanmeC=false;
+        var upwdC=false;
+    function justifyUname(){
+        var uname=document.getElementById('uname');
+        var pass_uname=document.getElementById('pass-uname');
+        var regFirst=/^\b[a-zA-Z]/;
+        var regLength=/^\b[a-zA-Z][a-zA-Z0-9]{5,11}$/;
+        if(!regFirst.test(uname.value)){
+            pass_uname.innerHTML='用户名需以英文字母开头';
+            pass_uname.style.color='red';
+            pass_uname.hidden=false;
+        }else if(!regLength.test(uname.value)) {
+            pass_uname.innerHTML = '用户名长度需在6-12之间';
+            pass_uname.style.color='red';
+            pass_uname.hidden=false;
+        }else{
+            pass_uname.innerHTML = '允许登录';
+            pass_uname.style.color='green';
+            pass_uname.hidden=false;
+        }
 
-            xhr.open("get","/myPro/checkUname?uname="+uname,true);
-            xhr.send(null);
-        }
+
     }
-    function upwd_blur(){
-        var upwd=$("upwd").value;
-        var cpwd=$("cpwd").value;
-        if(upwd==""){
-            $("showUpwd").innerHTML="需要密码";
-        }else {
-            $("showUpwd").innerHTML="";
-            boolUpwd=true;
+    function justifyUpwd(){
+        var upwd=document.getElementById('upwd');
+        var pass_upwd=document.getElementById('pass-upwd');
+        var reg=/^[a-zA-Z0-9]{6,12}$/;
+        if(!reg.test(upwd.value)){
+            pass_upwd.innerHTML='密码需要6-12位，不能有特殊字符';
+            pass_upwd.style.color='red';
+            pass_upwd.hidden=false;
+        } else{
+            pass_upwd.innerHTML = '允许登录';
+            pass_upwd.style.color='green';
+            pass_upwd.hidden=false;
         }
+
+
     }
+</script>
+<script>
+    $('button').click(function(){
+        $.ajax({
+            url:'http://127.0.0.1:3000/login',
+            type:'post',
+            data:{
+                uname:$('#uname').val(),
+                upwd:$('#upwd').val()
+            },
+            success:function(res){
+                alert(res);
+                location.href = "./../index.html";
+            }
+        })
+    })
 </script>
 </body>
 </html>

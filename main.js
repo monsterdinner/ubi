@@ -3,11 +3,14 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 
-const myPro=require('./routes/myPro.js');
+
+const login=require('./routes/login.js');
+const register=require('./routes/register.js');
+
 
 //1.使用express构建web服务器
 var app = express();
-app.listen(3002);
+app.listen(3000);
 
 //2.托管静态资源
 app.use(express.static('./myPro'));
@@ -22,4 +25,6 @@ app.use(bodyParser.urlencoded({
 
 
 //项目路由挂载
-app.use('/myPro',myPro);
+
+app.use('/login',login);
+app.use('/register',register);
